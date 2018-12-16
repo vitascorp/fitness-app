@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-content>
+    <mat-grid-list cols="2" rowHeight="80px">
+        <mat-grid-tile colspan="2">
+          <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Session Date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>  
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <mat-form-field>
+              <mat-select placeholder="Exercises Category">
+                <mat-option *ngFor="let category of categories" [value]="category.id">
+                  {{category.text}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-raised-button color="primary">Create</button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-raised-button color="accent">Cancel</button>
+        </mat-grid-tile>        
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+
+<app-training-session-excercise  *ngFor="let exercise of exercises" [exercise]="exercise"></app-training-session-excercise>
