@@ -10,9 +10,9 @@
         </mat-grid-tile>
         <mat-grid-tile colspan="2">
           <mat-form-field>
-              <mat-select placeholder="Exercises Category">
+              <mat-select [placeholder]="categoryTitle" [disabled]="!categories">
                 <mat-option *ngFor="let category of categories" [value]="category.id">
-                  {{category.text}}
+                  {{category.name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

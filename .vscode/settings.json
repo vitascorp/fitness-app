@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/b4d98fe4-321e-4131-8988-15797fd4e7fc/resourceGroups/fitness-application-group/providers/Microsoft.Web/sites/fitness-app",
+    "appService.deploySubpath": "dist\\fitness-app"
+}

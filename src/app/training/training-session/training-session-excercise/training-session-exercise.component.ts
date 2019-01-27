@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CategoryService } from 'src/app/shared/services/category.service';
+import { Category } from 'src/app/shared/models/category';
 
 @Component({
   selector: 'app-training-session-excercise',
@@ -8,11 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TrainingSessionExcerciseComponent implements OnInit {
   @Input() public exercise: number;
 
-  public exerciseNames = [
-    {id: 1, text: 'Exercise 1'},
-    {id: 2, text: 'Exercise 2'},
-    {id: 3, text: 'Exercise 3'}
-  ];
+  public categories: Category[];
 
   public measurements = [
     {id: 1, text: 'Kilogrammes'},
@@ -27,9 +25,10 @@ export class TrainingSessionExcerciseComponent implements OnInit {
     5
   ];
 
-  constructor() { }
+  constructor(private categoryService: CategoryService) { }
 
-  ngOnInit() {
+  public ngOnInit() {
+    this.categoryService.getCategories().subscribe((categories) => this.categories = categories);
   }
 
 }

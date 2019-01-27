@@ -15,6 +15,7 @@ import {
 import { TrainingRoutingModule } from './training-routing.module';
 import { TrainingSessionComponent } from './training-session/training-session.component';
 import { TrainingSessionExcerciseComponent } from './training-session/training-session-excercise/training-session-exercise.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [TrainingSessionComponent, TrainingSessionExcerciseComponent],
@@ -29,7 +30,8 @@ import { TrainingSessionExcerciseComponent } from './training-session/training-s
     MatInputModule,
     MatGridListModule,
     MatIconModule,
-    TrainingRoutingModule
+    TrainingRoutingModule,
+    SharedModule
   ]
 })
 export class TrainingModule { }
