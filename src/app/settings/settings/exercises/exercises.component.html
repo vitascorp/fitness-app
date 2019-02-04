@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-content>  
+    <mat-grid-list cols="12" rowHeight="60px">
+      <ng-container *ngFor="let category of categories">
+          <ng-container *ngFor="let exercise of getCategoryExercises(category.id)">
+            <mat-grid-tile colspan="8">
+              {{exercise.name}} ({{category.name}})
+            </mat-grid-tile>
+            <mat-grid-tile colspan="4">
+              <button mat-raised-button color="primary" (click)="navigate(exercise.id)">Змінити</button>        
+            </mat-grid-tile>
+        </ng-container>
+      </ng-container>
+      <mat-grid-tile colspan="4">
+        <button mat-raised-button color="primary" (click)="navigate()">Добавити</button>        
+      </mat-grid-tile> 
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

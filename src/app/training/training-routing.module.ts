@@ -5,7 +5,6 @@ import { TrainingSessionComponent } from './training-session/training-session.co
 const routes: Routes = [
   { path: '', redirectTo: 'session', pathMatch: 'full' },
   { path: 'session', component: TrainingSessionComponent },
-
 ];
 
 @NgModule({

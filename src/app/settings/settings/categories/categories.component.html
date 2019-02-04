@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-content>  
+    <mat-grid-list cols="12" rowHeight="60px">
+      <div *ngFor="let category of categories">
+        <mat-grid-tile colspan="8">
+          {{category.name}}
+        </mat-grid-tile>
+        <mat-grid-tile colspan="4">
+          <button mat-raised-button color="primary" (click)="navigate(category.id)">Змінити</button>        
+        </mat-grid-tile>
+      </div>
+      <mat-grid-tile colspan="4">
+        <button mat-raised-button color="primary" (click)="navigate()">Добавити</button>        
+      </mat-grid-tile> 
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-card>
+    <mat-card-content>  
+        <mat-grid-list cols="2" rowHeight="60px">
+            <mat-grid-tile colspan="2">
+              <mat-form-field>
+                <input formControlName="id" type="hidden">
+                <input matInput formControlName="name" type="text" placeholder="Назва Категорії">
+              </mat-form-field> 
+          </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <mat-form-field>
+            <input matInput formControlName="order" type="number" placeholder="Порядок Категорії">
+          </mat-form-field> 
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <button mat-raised-button color="primary" type="button" (click)="save()">Зберегти</button>        
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <button mat-raised-button color="accert" type="button" (click)="remove()">Видалити</button>        
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <button mat-raised-button color="accert" type="button" (click)="back()">Відминити</button>        
+        </mat-grid-tile> 
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>  
+ </form>  
