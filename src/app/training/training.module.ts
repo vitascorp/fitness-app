@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 import {
   MatCardModule,
   MatFormFieldModule,
@@ -21,6 +24,9 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [TrainingSessionComponent, TrainingSessionExcerciseComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatNativeDateModule,

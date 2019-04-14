@@ -6,7 +6,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { CategoriesComponent } from './settings/categories/categories.component';
 import { CategoryComponent } from './settings/categories/category/category.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { SharedModule } from './../shared/shared.module';
 import { CategoriesService } from './settings/categories/categories.service';
 import { ExercisesComponent } from './settings/exercises/exercises.component';
 import { ExerciseComponent } from './settings/exercises/exercise/exercise.component';
@@ -17,7 +18,8 @@ import { ExercisesService } from './settings/exercises/exercises.service';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
+    HttpClient,
+    SharedModule,
     ReactiveFormsModule,
     MatCardModule,
     MatGridListModule,
