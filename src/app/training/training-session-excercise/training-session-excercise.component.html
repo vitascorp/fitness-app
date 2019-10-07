@@ -1,0 +1,78 @@
+<form [formGroup]="trainingExerciseForm">
+  <mat-card>
+      <mat-card-content>  
+        <mat-grid-list cols="12" rowHeight="60px">
+          <mat-grid-tile colspan="1"><b *ngIf="trainingExercise?.order != null">{{trainingExercise.order + 1}}.</b></mat-grid-tile>
+          <ng-container formArrayName="titles" *ngFor="let exerciseTitle of this.exerciseTitleForms.controls; let i = index;">
+            <ng-container [formGroupName]="i">
+              <mat-grid-tile colspan="6">
+                <mat-form-field>
+                  <mat-select formControlName="exerciseId" placeholder="Вправа">
+                    <mat-option *ngFor="let exercise of exercises" [value]="exercise.id">
+                      {{exercise.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="3">
+                <mat-form-field>
+                  <mat-select formControlName="measureId" placeholder="Одиниці Ваги">
+                    <mat-option *ngFor="let measure of measures" [value]="measure.id">
+                      {{measure.shortName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="2">
+                <button mat-raised-button color="accent" (click)="removeExerciseTitle(i)" [disabled]="this.exerciseTitleForms.length === 1">
+                  <mat-icon>remove_circle_outline</mat-icon>
+                </button>
+              </mat-grid-tile>
+            </ng-container>
+          </ng-container>
+
+          <mat-grid-tile *ngIf="!trainingExercise" colspan="12">
+            <button mat-raised-button color="primary" (click)="addExerciseTitle()">Добавити Суперсет Вправу</button>
+          </mat-grid-tile>
+
+          <ng-container *ngIf="trainingExercise?.id">
+            <ng-container formArrayName="attempts" *ngFor="let exerciseAttempt of this.exerciseAttemptForms.controls; let i = index;">
+              <ng-container [formGroupName]="i">
+                <mat-grid-tile colspan="1"><small *ngIf="!exerciseAttempt.value.supersetOrder">{{exerciseAttempt.value.order + 1}}.</small></mat-grid-tile>
+                <mat-grid-tile colspan="6">
+                  <mat-form-field>
+                    <input #weightInputs formControlName="weight" matInput type="number" placeholder="Вага">
+                  </mat-form-field>  
+                </mat-grid-tile>        
+                <mat-grid-tile colspan="3">
+                  <mat-form-field>
+                    <input formControlName="amount" matInput type="number" placeholder="Кількість">
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                  <button mat-raised-button *ngIf="!exerciseAttempt.value.supersetOrder" color="accent" (click)="removeExerciseAttempt(exerciseAttempt.value.order)" [disabled]="this.exerciseAttemptForms.length === 1">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                </mat-grid-tile>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+
+          <mat-grid-tile *ngIf="trainingExercise" colspan="{{isAttemptsSupersetAvailable ? 6 : 12}}">
+            <button mat-raised-button color="primary" (click)="addExerciseAttempt()">Добавити Підхід</button>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="isAttemptsSupersetAvailable" colspan="6">
+            <button mat-raised-button color="primary" (click)="addDropsetExerciseAttempt()">Добавити Дропсет Підхід</button>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="bottom-buttons" colspan="{{trainingExercise ? 6 : 12}}">
+            <button mat-raised-button color="primary" (click)="saveTrainingExercise()">Зберегти</button>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="trainingExercise" class="bottom-buttons" colspan="6">
+            <button mat-raised-button color="accent" (click)="removeTrainingExercise()">Видалити</button>
+          </mat-grid-tile> 
+
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</form>

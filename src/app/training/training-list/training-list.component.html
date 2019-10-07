@@ -1,0 +1,20 @@
+<mat-card class="training-list">
+  <mat-card-content>  
+    <mat-grid-list cols="12" rowHeight="60px">
+      <div *ngFor="let training of trainings">
+        <mat-grid-tile colspan="4">
+          {{training.date | date : "dd MMM y" }}
+        </mat-grid-tile>
+        <mat-grid-tile colspan="4" class="category-tile">
+          {{training.categoryName}}
+        </mat-grid-tile>
+        <mat-grid-tile colspan="4">
+          <button mat-raised-button color="primary" (click)="navigate(training.id)">Змінити</button>        
+        </mat-grid-tile>
+      </div>
+      <mat-grid-tile colspan="4">
+        <button mat-raised-button color="primary" (click)="navigate()">Добавити</button>        
+      </mat-grid-tile> 
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

@@ -2,32 +2,56 @@
   <input type="hidden" formControlName="id" />
   <mat-card>
     <mat-card-content>
-      <mat-grid-list cols="2" rowHeight="80px">
-          <mat-grid-tile colspan="2">
+      <mat-grid-list cols="3" rowHeight="80px">
+          <mat-grid-tile colspan="3">
             <mat-form-field>
                 <input formControlName="date" matInput [matDatepicker]="picker" placeholder="Session Date">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>  
           </mat-grid-tile>
-          <mat-grid-tile colspan="2">
+          <mat-grid-tile colspan="3">
             <mat-form-field>
                 <mat-select formControlName="categoryId" [placeholder]="categoryTitle" [disabled]="!categories">
-                  <mat-option *ngFor="let category of categories" [value]="category.id">
-                    {{category.name}}
-                  </mat-option>
+                  <ng-container *ngFor="let category of categories">
+                    <mat-option *ngIf="category.order" [value]="category.id"> <!-- skip General category which has to have order equals 0 by convention -->
+                      {{category.name}}
+                    </mat-option>
+                  </ng-container>
                 </mat-select>
               </mat-form-field>
           </mat-grid-tile>
-          <mat-grid-tile>
-            <button mat-raised-button color="primary">Create</button>
+          <mat-grid-tile colspan="3">
+            <mat-form-field>
+              <input formControlName="weight" matInput placeholder="Вага">
+            </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
-            <button mat-raised-button color="accent">Cancel</button>
-          </mat-grid-tile>        
+            <button mat-raised-button color="primary" (click)="saveTrainingSession()">{{training?.id ? "Зберегти" : "Добавити"}}</button>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="training?.id">
+            <button mat-raised-button color="accent" (click)="removeTrainingSession()">Видалити</button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-raised-button color="accent" (click)="back()">Назад</button>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="!training?.cardio?.id && !isCardioShown" colspan="3">
+            <button mat-raised-button color="primary" (click)="showTrainingCardio()">Добавити Кардіо</button>
+          </mat-grid-tile>
       </mat-grid-list>
     </mat-card-content>
   </mat-card>
 </form>
 <span>{{message}}</span>
-<app-training-session-excercise *ngFor="let exercise of exercises" [exercise]="exercise"></app-training-session-excercise>
+<app-training-cardio *ngIf="isCardioShown || training?.cardio?.id" [trainingId]="training?.id" [trainingCardio]="training?.cardio"></app-training-cardio>
+<app-training-session-excercise *ngFor="let trainingExercise of training?.exercises; let i = index" 
+  [trainingId]="trainingForm.value.id" 
+  [categories]="[trainingForm.value.categoryId, generalCategory.id]" 
+  [trainingExercise]="trainingExercise"
+  (updated)="onUpdatedTrainingExercise($event)" 
+  (removed)="onRemovedTrainingExercise($event)"></app-training-session-excercise>
+<app-training-session-excercise *ngIf="training" 
+  [trainingId]="trainingForm.value.id" 
+  [categories]="[trainingForm.value.categoryId, generalCategory.id]" 
+  [lastOrder]="getLastOrder()" 
+  (updated)="onUpdatedTrainingExercise($event)"></app-training-session-excercise>

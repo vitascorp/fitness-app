@@ -1,0 +1,30 @@
+<form [formGroup]="trainingCardioForm">
+  <input type="hidden" formControlName="id" />
+  <mat-card>
+    <mat-card-content>
+      <mat-grid-list cols="3" rowHeight="80px">
+          <mat-grid-tile>
+            <mat-form-field>
+              <input formControlName="angle" matInput placeholder="Кут" />
+            </mat-form-field> 
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+              <input formControlName="speed" matInput placeholder="Швидкість" />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field>
+              <input formControlName="time" matInput placeholder="Час" />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan="3">
+            <button mat-raised-button color="primary" (click)="saveTrainingCardio()">Зберегти</button>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="trainingCardioForm.value.id" colspan="3">
+            <button mat-raised-button color="accent" (click)="removeTrainingCardio()">Видалити</button>
+          </mat-grid-tile>        
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</form>

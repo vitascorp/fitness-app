@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'https://fitness-app-api.azurewebsites.net/api',
+  apiUrl: 'https://localhost:44381/api',
+  // apiUrl: 'https://fitness-app-api.azurewebsites.net/api',
   production: false
 };
 

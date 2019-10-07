@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Training } from './training-session/training-session-excercise/models/training';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TrainingExercise } from './training-session/training-session-excercise/models/training-exercise';
-import { TrainingExerciseAttempt } from './training-session/training-session-excercise/models/training-exercise-attempt';
+import { Training } from './models/training';
+import { TrainingExercise } from './models/training-exercise';
+import { TrainingExerciseAttempt } from './models/training-exercise-attempt';
+import { TrainingCardio } from './models/training-cardio';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,21 @@ export class TrainingService {
 
   public saveTraining(model: Training): Observable<Training> {
     return this.httpClient.post<Training>(this.api, model);
+  }
+
+  public deleteTraining(id: number): Observable<any> {
+    const url = `${this.api}/${id}`;
+    return this.httpClient.delete(url);
+  }
+
+  public saveTrainingCardio(trainingId: number, model: TrainingCardio): Observable<TrainingCardio> {
+    const url = `${this.api}/${trainingId}/cardio`;
+    return this.httpClient.post<TrainingCardio>(url, model);
+  }
+
+  public deleteTrainingCardio(id: number): Observable<any> {
+    const url = `${this.api}/cardio/${id}`;
+    return this.httpClient.delete(url);
   }
 
   public saveTrainingExercise(trainingId: number, model: TrainingExercise): Observable<TrainingExercise> {

@@ -17,11 +17,18 @@ import {
 
 import { TrainingRoutingModule } from './training-routing.module';
 import { TrainingSessionComponent } from './training-session/training-session.component';
-import { TrainingSessionExcerciseComponent } from './training-session/training-session-excercise/training-session-exercise.component';
+import { TrainingCardioComponent } from './training-cardio/training-cardio.component';
+import { TrainingSessionExcerciseComponent } from './training-session-excercise/training-session-exercise.component';
 import { SharedModule } from '../shared/shared.module';
+import { TrainingListComponent } from './training-list/training-list.component';
 
 @NgModule({
-  declarations: [TrainingSessionComponent, TrainingSessionExcerciseComponent],
+  declarations: [
+    TrainingSessionComponent,
+    TrainingCardioComponent,
+    TrainingSessionExcerciseComponent,
+    TrainingListComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

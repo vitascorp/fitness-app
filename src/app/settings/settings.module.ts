@@ -18,7 +18,7 @@ import { ExercisesService } from './settings/exercises/exercises.service';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClient,
+    HttpClientModule,
     SharedModule,
     ReactiveFormsModule,
     MatCardModule,

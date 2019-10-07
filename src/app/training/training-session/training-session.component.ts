@@ -3,11 +3,11 @@ import { Category } from 'src/app/shared/models/category';
 import { Exercise } from 'src/app/shared/models/exercise';
 import { Measure } from 'src/app/shared/models/measure';
 import { CategoryService } from 'src/app/shared/services/category.service';
-import { ExerciseService } from 'src/app/shared/services/exercise.service';
-import { MeasureService } from 'src/app/shared/services/measure.service';
-import { forkJoin } from 'rxjs';
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { TrainingService } from '../training.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Training } from '../models/training';
+import { TrainingExercise } from '../models/training-exercise';
 
 @Component({
   selector: 'app-training-session',
@@ -15,12 +15,17 @@ import { TrainingService } from '../training.service';
   styleUrls: ['./training-session.component.scss']
 })
 export class TrainingSessionComponent implements OnInit {
+
   public categories: Category[];
   public exercises: Exercise[];
   public measureItems: Measure[];
   public message: string;
+  public training: Training;
+  public generalCategory: Category;
 
   public trainingForm: FormGroup;
+
+  public isCardioShown: boolean = false;
 
   public get categoryTitle(): string {
     return this.categories ? 'Категорії' : 'Завантаження';
@@ -35,37 +40,94 @@ export class TrainingSessionComponent implements OnInit {
   }
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private categoryService: CategoryService,
-    private exerciseService: ExerciseService,
-    private measureService: MeasureService,
     private trainingService: TrainingService,
     private formBuilder: FormBuilder
   ) { }
 
   public ngOnInit() {
     this.trainingForm = this.formBuilder.group({
-      id: [0],
+      id: [null],
       date: [new Date()],
-      categoryId: [0]
+      categoryId: [null],
+      weight: null
     });
 
-    const categoriesSub = this.categoryService.getCategories();
-    const exercisesSub = this.exerciseService.getExcerices();
-    const measureItemsSub = this.measureService.getMeasureItems();
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+      this.generalCategory = categories.filter(c => c.order === 0)[0]; //General category has order equals 0 by convention
+    });
 
-    forkJoin(categoriesSub, exercisesSub, measureItemsSub)
-    .subscribe((data) => {
-       this.categories = data[0];
-       this.exercises = data[1];
-       this.measureItems = data[2];
+    this.route.params.subscribe((params) => {
+      const trainingId = params.trainingId;
+      if (!params.trainingId) {
+        return;
+      }
+
+      this.trainingService.getTraining(trainingId).subscribe((training) => {
+        this.training = training;
+        this.updateTrainingForm(training);
       });
+    });
+  }
+
+  public showTrainingCardio() {
+    this.isCardioShown = true;
   }
 
   public saveTrainingSession() {
     const model = this.trainingForm.value;
-    this.trainingService.saveTraining(model).subscribe((data) => {
-      this.trainingForm.setValue(data);
+    this.trainingService.saveTraining(model).subscribe((training) => {
+      this.training = training;
+      this.updateTrainingForm(training);
       this.message = 'Successfully saved';
+    });
+  }
+
+  public removeTrainingSession() {
+    this.trainingService.deleteTraining(this.trainingForm.value.id).subscribe(() => {
+      this.router.navigate(['/training/list']);
+    });
+  }
+
+  public back() {
+    this.router.navigate(['training', 'list']);
+  }
+
+  public getLastOrder(): number {
+    return this.training && this.training.exercises.length ?
+      this.training.exercises[this.training.exercises.length - 1].order
+      : -1;
+  }
+
+  public onUpdatedTrainingExercise(trainingExercise: TrainingExercise) {
+    let index = -1;
+    this.training.exercises.forEach((e, i) => {
+      if (e.id === trainingExercise.id) {
+        index = i;
+      }
+    });
+
+    if (index > -1) {
+      this.training.exercises[index] = trainingExercise;
+    } else {
+      this.training.exercises.push(trainingExercise);
+    }
+  }
+
+  public onRemovedTrainingExercise(trainingExerciseId: number) {
+    this.training.exercises = this.training.exercises
+      .filter((trainingExercise) => trainingExercise.id !== trainingExerciseId);
+  }
+
+  private updateTrainingForm(training: Training) {
+    this.trainingForm.patchValue({
+      id: training.id,
+      date: training.date,
+      categoryId: training.categoryId,
+      weight: training.weight
     });
   }
 }

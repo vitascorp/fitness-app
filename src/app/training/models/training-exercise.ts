@@ -1,10 +1,9 @@
 import { TrainingExerciseAttempt } from './training-exercise-attempt';
+import { TrainingExerciseTitle } from './training-exercise-title';
 
 export class TrainingExercise {
     public id: number;
-    public exerciseId: number;
-    public measureId: number;
     public order: number;
-    public supersetOrder: number;
+    public titles: TrainingExerciseTitle[];
     public attempts: TrainingExerciseAttempt[];
 }
