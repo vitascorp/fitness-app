@@ -39,7 +39,7 @@ export class CategoryComponent implements OnInit {
     );
   }
 
-  public remove(categoryId: number) {
+  public remove() {
     this.categoriesService.removeCategory(this.form.value.id).subscribe(
       () => this.back()
     );
