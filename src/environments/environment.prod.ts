@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'https://fitness-app-api.azurewebsites.net/api',
+  apiUrl: 'http://fitness-app-api.azurewebsites.net/api',
   production: true
 };
