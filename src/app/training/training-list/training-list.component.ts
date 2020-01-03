@@ -18,7 +18,9 @@ export class TrainingListComponent implements OnInit {
   public ngOnInit() {
     this.trainingService.getTrainings().subscribe((trainings) =>
       this.trainings = trainings
-    );
+    , (error) => {
+      console.log(error);
+    });
   }
 
   public navigate(trainingId?: number) {
