@@ -4,7 +4,7 @@
 
 export const environment = {
   // apiUrl: 'https://localhost:44381/api',
-  apiUrl: 'http://fitness-app-api.azurewebsites.net/api',
+  apiUrl: 'https://fitness-app-api.azurewebsites.net/api',
   production: false
 };
 
