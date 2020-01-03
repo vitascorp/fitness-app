@@ -17,6 +17,11 @@ export class TrainingService {
   constructor(private httpClient: HttpClient) { }
 
   public getTrainings(): Observable<Training[]> {
+    this.httpClient.get(this.api).subscribe(t => {
+      var g = t;
+    }, err => {
+      console.log(err);
+    });
     return this.httpClient.get<Training[]>(this.api);
   }
 
