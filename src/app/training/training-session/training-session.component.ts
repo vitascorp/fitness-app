@@ -126,7 +126,7 @@ export class TrainingSessionComponent implements OnInit {
   private updateTrainingForm(training: Training) {
     this.trainingForm.patchValue({
       id: training.id,
-      date: training.date,
+      date: new Date(training.date),
       categoryId: training.categoryId,
       weight: training.weight
     });
@@ -137,6 +137,9 @@ export class TrainingSessionComponent implements OnInit {
     const month = date.getMonth();
     const day = date.getDate();
 
-    return new Date(year, month, day);
+    date = new Date(year, month, day);
+    date.setMinutes((date.getMinutes() - date.getTimezoneOffset()));
+
+    return date;
   }
 }

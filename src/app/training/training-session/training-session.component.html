@@ -46,12 +46,12 @@
 <app-training-cardio *ngIf="isCardioShown || training?.cardio?.id" [trainingId]="training?.id" [trainingCardio]="training?.cardio"></app-training-cardio>
 <app-training-session-excercise *ngFor="let trainingExercise of training?.exercises; let i = index" 
   [trainingId]="trainingForm.value.id" 
-  [categories]="[trainingForm.value.categoryId, generalCategory.id]" 
+  [categories]="[trainingForm.value.categoryId, generalCategory?.id]" 
   [trainingExercise]="trainingExercise"
   (updated)="onUpdatedTrainingExercise($event)" 
   (removed)="onRemovedTrainingExercise($event)"></app-training-session-excercise>
 <app-training-session-excercise *ngIf="training" 
   [trainingId]="trainingForm.value.id" 
-  [categories]="[trainingForm.value.categoryId, generalCategory.id]" 
+  [categories]="[trainingForm.value.categoryId, generalCategory?.id]" 
   [lastOrder]="getLastOrder()" 
   (updated)="onUpdatedTrainingExercise($event)"></app-training-session-excercise>
