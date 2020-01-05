@@ -79,6 +79,7 @@ export class TrainingSessionComponent implements OnInit {
 
   public saveTrainingSession() {
     const model = this.trainingForm.value;
+    model.date = this.toSimpleDate(model.date);
     this.trainingService.saveTraining(model).subscribe((training) => {
       this.training = training;
       this.updateTrainingForm(training);
@@ -129,5 +130,13 @@ export class TrainingSessionComponent implements OnInit {
       categoryId: training.categoryId,
       weight: training.weight
     });
+  }
+
+  private toSimpleDate(date: Date): Date {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    return new Date(year, month, day);
   }
 }
