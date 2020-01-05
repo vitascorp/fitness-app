@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Exercise } from 'src/app/shared/models/exercise';
 import { Observable } from 'rxjs';
+import { ExerciseService } from 'src/app/shared/services/exercise.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs';
 export class ExercisesService {
   private api: string = `${environment.apiUrl}/exercises`;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private sharedExerciseService: ExerciseService) { }
 
   public getExercies(): Observable<Exercise[]> {
     return this.httpClient.get<Exercise[]>(this.api);
@@ -21,10 +22,12 @@ export class ExercisesService {
   }
 
   public saveExercise(exercise: Exercise): Observable<Exercise> {
+    this.sharedExerciseService.clearCache();
     return this.httpClient.post<Exercise>(this.api, exercise);
   }
 
   public removeExercise(exerciseId: number): Observable<any> {
+    this.sharedExerciseService.clearCache();
     return this.httpClient.delete(`${this.api}/${exerciseId}`);
   }
 }

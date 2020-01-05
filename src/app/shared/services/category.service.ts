@@ -24,4 +24,8 @@ export class CategoryService {
 
     return this.cache$;
   }
+
+  public clearCache(){
+    this.cache$ = null;
+  }
 }

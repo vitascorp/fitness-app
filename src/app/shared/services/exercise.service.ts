@@ -24,4 +24,8 @@ export class ExerciseService {
 
     return this.cache$;
   }
+
+  public clearCache(){
+    this.cache$ = null;
+  }
 }
